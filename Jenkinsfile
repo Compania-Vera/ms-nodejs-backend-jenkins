@@ -113,7 +113,7 @@ pipeline {
             }
         }
 
-        stage('[CD-DEV] Deploy to AKS') {
+        stage('[CD-DEV] Deploy to AKS.') {
           steps {
             sh '''
                 az aks command invoke \
