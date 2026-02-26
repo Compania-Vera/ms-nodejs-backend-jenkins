@@ -169,7 +169,7 @@ pipeline {
                   --resource-group $RESOURCE_GROUP \
                   --name $AKS_NAME \
                   --command "kubectl apply -f k8s-qa.yml" \
-                  --file k8s-qa.yml
+                  --file k8s-dev.yml
 
             '''
           }
@@ -219,7 +219,7 @@ pipeline {
                   --resource-group $RESOURCE_GROUP \
                   --name $AKS_NAME \
                   --command "kubectl apply -f k8s-prd.yml" \
-                  --file k8s-prd.yml
+                  --file k8s-dev.yml
 
             '''
           }
