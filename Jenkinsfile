@@ -162,14 +162,32 @@ pipeline {
             }
         }
 		
+		stage('[CD-QA] Set Image Tag in k8s.yml') {
+            steps {
+                script { 
+                    // Declarar más variables de entorno
+                    env.API_PROVIDER_URL = "https://qa.api.com"
+                    env.ENV = "qa"
+                }
+
+                sh '''
+                  echo ">>> Renderizando k8s.yml..."
+                  
+                  envsubst < k8s.yml > k8s-qa.yml
+                  cat k8s-qa.yml
+
+                '''
+            }
+        }
+		
 		stage('[CD-QA] Deploy to AKS') {
           steps {
             sh '''
                 az aks command invoke \
                   --resource-group $RESOURCE_GROUP \
                   --name $AKS_NAME \
-                  --command "kubectl apply -f k8s-dev.yml" \
-                  --file k8s-dev.yml
+                  --command "kubectl apply -f k8s-qa.yml" \
+                  --file k8s-qa.yml
 
             '''
           }
@@ -212,14 +230,32 @@ pipeline {
             }
         }
 		
+		stage('[CD-PRD] Set Image Tag in k8s.yml') {
+            steps {
+                script { 
+                    // Declarar más variables de entorno
+                    env.API_PROVIDER_URL = "https://prd.api.com"
+                    env.ENV = "prd"
+                }
+
+                sh '''
+                  echo ">>> Renderizando k8s.yml..."
+                  
+                  envsubst < k8s.yml > k8s-prd.yml
+                  cat k8s-prd.yml
+
+                '''
+            }
+        }
+		
 		stage('[CD-PRD] Deploy to AKS') {
           steps {
             sh '''
                 az aks command invoke \
                   --resource-group $RESOURCE_GROUP \
                   --name $AKS_NAME \
-                  --command "kubectl apply -f k8s-dev.yml" \
-                  --file k8s-dev.yml
+                  --command "kubectl apply -f k8s-prd.yml" \
+                  --file k8s-prd.yml
 
             '''
           }
