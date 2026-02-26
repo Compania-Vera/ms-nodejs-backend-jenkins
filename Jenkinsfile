@@ -168,7 +168,7 @@ pipeline {
                 az aks command invoke \
                   --resource-group $RESOURCE_GROUP \
                   --name $AKS_NAME \
-                  --command "kubectl apply -f k8s-qa.yml" \
+                  --command "kubectl apply -f k8s-dev.yml" \
                   --file k8s-dev.yml
 
             '''
@@ -218,7 +218,7 @@ pipeline {
                 az aks command invoke \
                   --resource-group $RESOURCE_GROUP \
                   --name $AKS_NAME \
-                  --command "kubectl apply -f k8s-prd.yml" \
+                  --command "kubectl apply -f k8s-dev.yml" \
                   --file k8s-dev.yml
 
             '''
